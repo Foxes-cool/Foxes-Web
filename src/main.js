@@ -9,7 +9,7 @@
                 let update = false;
                 let days = Math.floor(new Date()/86400000);
                 if(totals["${tags[i]}"]) {
-                    if(Math.floor(totals["${tags[i]}"].time/86400000) != days) {
+                    if(totals["${tags[i]}"].time != days) {
                         update = true;
                     }
                 }
