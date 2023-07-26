@@ -5,7 +5,7 @@
     let tags = ["fox", "curious", "happy", "scary", "sleeping"];
     for (let i = 0; i < tags.length; i++) {
         eval(`
-            foxes.${tags[i]} = function() {
+            foxes.${tags[i]} = function(object) {
                 let update = false;
                 let days = Math.floor(new Date()/86400000);
                 if(totals["${tags[i]}"]) {
@@ -22,7 +22,13 @@
                     xmlHttp.send( null );
                     totals["${tags[i]}"] = {time: days, count: xmlHttp.responseText};
                 }
-                return \`https://img.foxes.cool/${tags[i]}/\${Math.floor(Math.random()*totals["${tags[i]}"].count)}.jpg\`;
+
+                const ret = [];
+                for (let d in object) {
+                    ret.push(d + '=' + object[d]);
+                }
+
+                return \`https://img.foxes.cool/${tags[i]}/\${Math.floor(Math.random()*totals["${tags[i]}"].count)}.jpg?\${ret.join("&")}\`.replace(/\\?$/,'');
             }
         `);
     }
